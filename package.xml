@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>goku</name>
+  <version>0.0.1</version>
+  <description>ROS 2 Jazzy package for Goku, a 4-wheel skid-steer robot with real hardware</description>
+  <maintainer email="cherniyassine395@gmail.com">Yassine cherni </maintainer>
+  <license>Apache-2.0</license>
+  <depend>rclcpp</depend>
+  <depend>hardware_interface</depend>
+  <depend>pluginlib</depend>
+  <depend>serial</depend>
+  <depend>robot_localization</depend>
+  <depend>controller_manager</depend>
+  <depend>diff_drive_controller</depend>
+  <depend>joint_state_broadcaster</depend>
+  <depend>robot_state_publisher</depend>
+  <depend>slam_toolbox</depend>
+  <depend>nav2_bringup</depend>
+  <exec_depend>rviz2</exec_depend>
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
