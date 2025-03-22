@@ -1,0 +1,6 @@
+<library path="diffbot_system_hardware">
+  <class name="goku/DiffBotSystemHardware" type="goku::DiffBotSystemHardware" 
+         base_class_type="hardware_interface::SystemInterface">
+    <description>Hardware interface for Goku 4-wheel robot</description>
+  </class>
+</library>
