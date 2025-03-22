@@ -11,3 +11,7 @@ A ROS 2 Jazzy package for a 4-wheel skid-steer robot with real hardware, SLAM, a
 1. Install ROS 2 Jazzy and dependencies:
    ```bash
    sudo apt install ros-jazzy-navigation2 ros-jazzy-nav2-bringup ros-jazzy-slam-toolbox ros-jazzy-robot-localization libserial-dev
+   bash```
+cd ~/ros2_ws
+colcon build --packages-select goku
+source install/setup.bash
