@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="goku_robot">
+  <xacro:arg name="prefix" default="" />
+  <xacro:arg name="use_mock_hardware" default="false" />
+
+  <xacro:property name="wheel_radius" value="0.015" />
+  <xacro:property name="wheel_separation" value="0.10" />
+  <xacro:property name="wheelbase" value="0.15" />
+
+  <material name="gray"><color rgba="0.5 0.5 0.5 1.0"/></material>
+  <material name="black"><color rgba="0.0 0.0 0.0 1.0"/></material>
+
+  <link name="base_link">
+    <visual>
+      <geometry><box size="0.2 0.15 0.05"/></geometry>
+      <material name="gray"/>
+    </visual>
+    <collision>
+      <geometry><box size="0.2 0.15 0.05"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="1.0"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+    </inertial>
+  </link>
+
+  <xacro:macro name="wheel" params="side prefix x_pos y_pos">
+    <link name="${prefix}${side}_wheel_link">
+      <visual>
+        <geometry><cylinder radius="${wheel_radius}" length="0.01"/></geometry>
+        <material name="black"/>
+      </visual>
+      <collision>
+        <geometry><cylinder radius="${wheel_radius}" length="0.01"/></geometry>
+      </collision>
+      <inertial>
+        <mass value="0.1"/>
+        <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001"/>
+      </inertial>
+    </link>
+    <joint name="${prefix}${side}_wheel_joint" type="continuous">
+      <parent link="base_link"/>
+      <child link="${prefix}${side}_wheel_link"/>
+      <origin xyz="${x_pos} ${y_pos} -0.025" rpy="1.5708 0 0"/>
+      <axis xyz="0 0 1"/>
+    </joint>
+  </xacro:macro>
+
+  <xacro:wheel side="left_front" prefix="$(arg prefix)" x_pos="-${wheel_separation/2}" y_pos="${wheelbase/2}"/>
+  <xacro:wheel side="right_front" prefix="$(arg prefix)" x_pos="${wheel_separation/2}" y_pos="${wheelbase/2}"/>
+  <xacro:wheel side="left_rear" prefix="$(arg prefix)" x_pos="-${wheel_separation/2}" y_pos="-${wheelbase/2}"/>
+  <xacro:wheel side="right_rear" prefix="$(arg prefix)" x_pos="${wheel_separation/2}" y_pos="-${wheelbase/2}"/>
+
+  <!-- LiDAR -->
+  <link name="lidar_link">
+    <visual><geometry><cylinder radius="0.02" length="0.05"/></geometry><material name="black"/></visual>
+    <collision><geometry><cylinder radius="0.02" length="0.05"/></geometry></collision>
+    <inertial><mass value="0.1"/><inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/></inertial>
+  </link>
+  <joint name="lidar_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="lidar_link"/>
+    <origin xyz="0 0 0.06" rpy="0 0 0"/>
+  </joint>
+
+  <!-- IMU -->
+  <link name="imu_link">
+    <inertial><mass value="0.01"/><inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.00001" iyz="0" izz="0.00001"/></inertial>
+  </link>
+  <joint name="imu_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+    <origin xyz="0 0 0.025" rpy="0 0 0"/>
+  </joint>
+
+  <xacro:goku_ros2_control name="Goku" prefix="$(arg prefix)" use_mock_hardware="$(arg use_mock_hardware)"/>
+</robot>
