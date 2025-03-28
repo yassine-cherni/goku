@@ -1,0 +1,5 @@
+<library path="diff_drive_hw_interface">
+  <class name="diff_drive_hw_interface/DiffDriveHWInterface"
+         type="DiffDriveHWInterface"
+         base_class_type="hardware_interface::SystemInterface"/>
+</library>
