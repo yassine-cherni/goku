@@ -1,21 +1,24 @@
 controller_manager:
   ros__parameters:
     update_rate: 100  # Hz
+    use_sim_time: false
     diff_drive_controller:
-      type: diff_drive_controller/DiffDriveController
+      type: "diff_drive_controller/DiffDriveController"
 
 diff_drive_controller:
   ros__parameters:
     left_wheel_names: ["wheel_left_joint"]
     right_wheel_names: ["wheel_right_joint"]
-    wheel_separation: 0.5 
-    wheel_radius: 0.1     
-    publish_rate: 50.0
+    wheel_separation: 0.5  # Meters, adjust to your robot
+    wheel_radius: 0.1     # Meters, adjust to your robot
+    publish_rate: 50.0    # Hz
     odom_frame_id: "odom"
     base_frame_id: "base_link"
     pose_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.01]
     twist_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.01]
     enable_odom_tf: true
+    cmd_vel_timeout: 0.5  # Seconds
+    velocity_rolling_window_size: 10
 
 my_robot_hardware:
   ros__parameters:
